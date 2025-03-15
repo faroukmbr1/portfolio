@@ -334,92 +334,104 @@
         transition: 0.3s;
       }
 
-      @media (max-width: 768px) {
+    @media (max-width: 768px) {
   .nav {
     padding: 10px; /* Reduced padding */
     flex-direction: column;
     gap: 10px; /* Reduced gap */
   }
-  
+
   .hero {
     height: 50vh; /* Adjusted height for mobile */
     padding: 0 10px; /* Reduced padding */
   }
-  
+
   .hero h1 {
     font-size: 1.8rem; /* Reduced font size for mobile */
+    line-height: 1.2; /* Adjust line height */
   }
-  
+
   .hero p.current-role {
     font-size: 1rem; /* Reduced font size for mobile */
     padding: 5px 10px; /* Reduced padding */
   }
-  
+
   .category-filter {
     padding: 2rem 0; /* Reduced padding */
+    display: flex; /* Use flexbox for better alignment */
+    flex-wrap: wrap; /* Allow buttons to wrap */
+    justify-content: center; /* Center buttons */
   }
-  
+
   .filter-btn {
     padding: 8px 15px; /* Reduced padding */
     font-size: 0.9rem; /* Reduced font size */
+    margin: 5px; /* Add margin for spacing */
   }
-  
+
   .portfolio-grid {
     padding: 1rem 10px; /* Reduced padding */
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Adjust grid for smaller screens */
   }
-  
+
   .portfolio-item {
     margin: 10px 0; /* Added margin to separate items */
   }
-  
+
   .portfolio-card {
     padding: 15px; /* Reduced padding */
   }
-  
+
   .tech-tags span {
     padding: 3px 10px; /* Reduced padding */
     font-size: 0.7rem; /* Reduced font size */
   }
-  
+
   .cv-section, .contact-section {
     padding: 3rem 10px; /* Reduced padding */
   }
-  
+
   .contact-form {
     max-width: 90%; /* Adjusted width for mobile */
   }
-  
+
   input, textarea {
     padding: 10px; /* Reduced padding */
   }
-  
+
   button {
     padding: 10px 20px; /* Reduced padding */
   }
-  
+
   footer {
     padding: 1rem 10px; /* Reduced padding */
   }
+
+  .video-container {
+    padding-top: 56.25%; /* Maintain aspect ratio for videos */
+  }
+
+  .image-container {
+    padding-top: 0; /* Reset padding for images */
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Center the images */
+    align-items: center; /* Center the images vertically */
+  }
+
+  .image-container img {
+    max-width: 100%; /* Make the image responsive */
+    height: auto; /* Maintain aspect ratio */
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr); /* Adjust grid for smaller screens */
+  }
+
+  .gallery-item {
+    width: 100%; /* Full width for gallery items */
+    height: auto; /* Allow height to adjust based on image */
+  }
 }
-
-      /* Styles for the video overlay */
-      .video-overlay {
-        display: none; /* Hidden by default */
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
-        justify-content: center;
-        align-items: center;
-        z-index: 1000; /* Ensure it appears above other content */
-      }
-
-      .video-overlay video {
-        width: 80%; /* Adjust width as needed */
-        height: auto; /* Maintain aspect ratio */
-      }
     </style>
   </head>
   <body>
