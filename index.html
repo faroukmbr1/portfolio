@@ -41,6 +41,10 @@
         align-items: center;
       }
 
+      .nav h2 {
+        margin-bottom: 10px; /* Add space below the title */
+      }
+
       .nav-links {
         display: flex;
         gap: 30px;
@@ -64,7 +68,7 @@
         justify-content: center;
         flex-direction: column;
         text-align: center;
-        padding: 60px 20px 0; /* Add top padding equal to header height */
+        padding: 80px 20px 0; /* Increased top padding for fixed header */
       }
 
       .hero h1 {
@@ -125,16 +129,15 @@
 
       .video-container {
         position: relative;
-        padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        padding-top: 75%; /* Increased aspect ratio for larger video */
       }
 
       .video-container video {
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+        width: 100%; /* Ensure the video takes full width */
+        height: auto; /* Maintain aspect ratio */
       }
 
       .image-container {
@@ -336,15 +339,33 @@
       }
 
       @media (max-width: 768px) {
-        .nav {
-          padding: 10px; /* Reduced padding */
-          flex-direction: column;
-          gap: 10px; /* Reduced gap */
+        /* Make the video container and video bigger */
+        .video-container {
+          padding-top: 75%; /* Increased aspect ratio for larger video */
         }
 
+        .video-container video {
+          width: 100%; /* Ensure the video takes full width */
+          height: auto; /* Maintain aspect ratio */
+        }
+
+        /* Fix the header to stay at the top */
+        .nav {
+          position: fixed; /* Keep the header fixed */
+          top: 0; /* Align it to the top */
+          left: 0; /* Align it to the left */
+          right: 0; /* Align it to the right */
+          z-index: 1000; /* Ensure it stays above other content */
+        }
+
+        /* Add space between the title and navigation links */
+        .nav h2 {
+          margin-bottom: 10px; /* Add space below the title */
+        }
+
+        /* Adjust hero section padding to account for fixed header */
         .hero {
-          height: calc(50vh - 60px); /* Adjusted height for mobile */
-          padding: 60px 10px 0; /* Add top padding equal to header height */
+          padding: 80px 10px 0; /* Increased top padding to avoid overlap with fixed header */
         }
 
         .hero h1 {
@@ -371,10 +392,7 @@
 
         .portfolio-grid {
           padding: 1rem 10px; /* Reduced padding */
-          grid-template-columns: repeat(
-            auto-fit,
-            minmax(150px, 1fr)
-          ); /* Adjust grid for smaller screens */
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Adjust grid for smaller screens */
         }
 
         .portfolio-item {
@@ -412,27 +430,8 @@
           padding: 1rem 10px; /* Reduced padding */
         }
 
-        .video-container {
-          padding-top: 56.25%; /* Maintain aspect ratio for videos */
-        }
-
-        .image-container {
-          padding-top: 0; /* Reset padding for images */
-          display: flex; /* Use flexbox for centering */
-          justify-content: center; /* Center the images */
-          align-items: center; /* Center the images vertically */
-        }
-
-        .image-container img {
-          max-width: 100%; /* Make the image responsive */
-          height: auto; /* Maintain aspect ratio */
-        }
-
         .gallery-grid {
-          grid-template-columns: repeat(
-            2,
-            1fr
-          ); /* Adjust grid for smaller screens */
+          grid-template-columns: repeat(2, 1fr); /* Adjust grid for smaller screens */
         }
 
         .gallery-item {
