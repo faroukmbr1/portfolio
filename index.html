@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mebarki Omar Elfarouk - Portfolio</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <style>
+      :root {
+        --primary: #1a1a1a;
+        --secondary: #00c3ffab;
+        --light: #ffffff;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        background: var(--primary);
+        color: var(--light);
+        line-height: 1.6;
+      }
+
+      .nav {
+        position: fixed;
+        width: 100%;
+        padding: 20px 50px;
+        background: rgba(26, 26, 26, 0.95);
+        z-index: 1000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 30px;
+      }
+
+      .nav a {
+        color: var(--light);
+        text-decoration: none;
+        transition: 0.3s;
+        font-weight: 500;
+      }
+
+      .nav a:hover {
+        color: var(--secondary);
+      }
+
+      .hero {
+        height: 70vh; /* Adjusted height for the banner */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        padding: 0 20px;
+      }
+
+      .hero h1 {
+        font-size: 3rem; /* Adjusted font size */
+        margin-bottom: 20px;
+        line-height: 1.2;
+      }
+
+      .hero p.current-role {
+        font-size: 1.2rem;
+        margin-top: 15px;
+        padding: 10px 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 30px;
+        display: inline-block;
+      }
+
+      .category-filter {
+        text-align: center;
+        padding: 4rem 0 2rem;
+      }
+
+      .filter-btn {
+        background: transparent;
+        border: 2px solid var(--secondary);
+        color: var(--light);
+        padding: 10px 25px;
+        margin: 0 10px;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: 0.3s;
+        font-weight: 500;
+      }
+
+      .filter-btn.active,
+      .filter-btn:hover {
+        background: var(--secondary);
+      }
+
+      .portfolio-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        padding: 2rem 50px;
+      }
+
+      .portfolio-item {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        overflow: hidden;
+        transition: 0.3s;
+        cursor: pointer;
+      }
+
+      .portfolio-item:hover {
+        transform: translateY(-10px);
+      }
+
+      .video-container {
+        position: relative;
+        padding-top: 56.25%; /* 16:9 Aspect Ratio */
+      }
+
+      .video-container video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .image-container {
+        position: relative;
+        padding-top: 0%; /* Adjusted for smaller aspect ratio */
+        display: flex; /* Use flexbox for centering */
+        justify-content: center; /* Center the images */
+        align-items: center; /* Center the images vertically */
+      }
+
+      .image-container img {
+        max-width: 100%; /* Make the image responsive */
+        height: auto; /* Maintain aspect ratio */
+      }
+
+      /* Specific styles for smaller banner and business card images */
+      .portfolio-item[data-category="banners"] .image-container,
+      .portfolio-item[data-category="business-cards"] .image-container {
+        max-width: 60%; /* Adjust this value to make it smaller */
+        margin: 0 auto; /* Center the image */
+      }
+
+      .portfolio-card {
+        padding: 25px;
+        margin-top: 0; /* Remove margin on top of the portfolio card */
+      }
+
+      .tech-tags {
+        margin-top: 15px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .tech-tags span {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        padding: 2rem;
+        overflow-y: auto;
+        justify-content: center;
+        align-items: center;
+        display: flex; /* Center modal content */
+      }
+
+      .modal-content {
+        background: var(--primary);
+        padding: 2rem;
+        border-radius: 15px;
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+        display: flex;
+        justify-content: center; /* Center image horizontally */
+        align-items: center; /* Center image vertically */
+      }
+
+      .close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        color: var(--light);
+        font-size: 30px;
+        cursor: pointer;
+      }
+
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .gallery-item {
+        width: 50%;
+        height: 50%; /* Allow height to adjust based on image */
+        object-fit: cover;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .gallery-item:hover {
+        transform: scale(1.05);
+      }
+
+      .cv-section {
+        padding: 5rem 50px;
+      }
+
+      .timeline {
+        position: relative;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .timeline-item {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 30px;
+        margin: 2rem 0;
+        border-radius: 15px;
+      }
+
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+        margin-top: 3rem;
+      }
+
+      .skill-item {
+        text-align: center;
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+      }
+
+      .contact-section {
+        padding: 5rem 50px;
+        text-align: center;
+      }
+
+      .contact-form {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        border-radius: 5px;
+        color: var(--light);
+      }
+
+      button {
+        background: var(--secondary);
+        color: var(--light);
+        padding: 12px 35px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      button:hover {
+        opacity: 0.9;
+      }
+
+      footer {
+        padding: 2rem 50px;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.05);
+        margin-top: 5rem;
+      }
+
+      .social-links {
+        margin-bottom: 1rem;
+      }
+
+      .social-links a {
+        color: var(--light);
+        text-decoration: none;
+        margin: 0 10px;
+        transition: 0.3s;
+      }
+
+      .social-links a:hover {
+        color: var(--secondary);
+      }
+
+      .download-cv {
+        display: inline-block;
+        margin-top: 1rem;
+        padding: 10px 20px;
+        background: var(--secondary);
+        color: var(--light);
+        text-decoration: none;
+        border-radius: 5px;
+        transition: 0.3s;
+      }
+
+      @media (max-width: 768px) {
+        .nav {
+          padding: 20px;
+          flex-direction: column;
+          gap: 15px;
+        }
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+        .portfolio-grid {
+          padding: 2rem 20px;
+        }
+        .gallery-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav">
+      <h2>Mebarki Omar Elfarouk</h2>
+      <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#cv">CV</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+
+    <section id="home" class="hero">
+      <h1 data-aos="fade-up">
+        Mebarki Omar Elfarouki<br /><span style="color: var(--secondary)"
+          >International Business Manager</span
+        >
+      </h1>
+      <p data-aos="fade-up" data-aos-delay="200">
+        Bridging Tech, Design & Business – A Passionate Innovator
+      </p>
+      <p class="current-role" data-aos="fade-up" data-aos-delay="400">
+        Currently: Technical Support Specialist @ Teletic
+      </p>
+    </section>
+
+    <section id="portfolio">
+      <div class="category-filter">
+        <button class="filter-btn active" data-category="ui-ux">
+          UI/UX Design
+        </button>
+        <button class="filter-btn" data-category="banners">Banners</button>
+        <button class="filter-btn" data-category="posts">Social Posts</button>
+        <button class="filter-btn" data-category="brochure">Brochure</button>
+        <button class="filter-btn" data-category="business-cards">
+          Business Cards
+        </button>
+      </div>
+
+      <div class="portfolio-grid">
+        <!-- UI/UX Projects -->
+        <div
+          class="portfolio-item"
+          data-category="ui-ux"
+          data-aos="zoom-in"
+          data-gallery="diarent1.jpg,diarent2.jpg,diarent3.jpg"
+        >
+          <div class="video-container">
+            <video controls poster="diarent-thumbnail.jpg">
+              <source src="diarent-demo.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="portfolio-card">
+            <h3>Diarent - NFC Property Rental</h3>
+            <p>Algeria's first rental app integrating NFC technology</p>
+            <div class="tech-tags">
+              <span>Figma</span>
+              <span>NFC Integration</span>
+              <span>UX Research</span>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="portfolio-item"
+          data-category="ui-ux"
+          data-aos="zoom-in"
+          data-gallery="food1.jpg,food2.jpg,food3.jpg"
+        >
+          <div class="video-container">
+            <video controls poster="foodoclock-thumbnail.jpg">
+              <source src="foodoclock-demo.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="portfolio-card">
+            <h3>Food O'Clock</h3>
+            <p>Ultimate food ordering experience UI/UX</p>
+            <div class="tech-tags">
+              <span>Figma</span>
+              <span>Motion Design</span>
+              <span>User Flow</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banners -->
+        <div
+          class="portfolio-item"
+          data-category="banners"
+          data-aos="zoom-in"
+          data-gallery="banner1.jpg"
+        >
+          <div class="image-container">
+            <img src="banner1.jpg" alt="Event Banner for Tech Conference" />
+          </div>
+          <div class="portfolio-card">
+            <h3>Tech Conference Banner</h3>
+            <p>Large format banner design for tech event</p>
+            <div class="tech-tags">
+              <span>Photoshop</span>
+              <span>Print Design</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Posts -->
+        <div
+          class="portfolio-item"
+          data-category="posts"
+          data-aos="zoom-in"
+          data-gallery="social-post1.jpg"
+        >
+          <div class="image-container">
+            <img src="social-post1.jpg" alt="Social Media Post" />
+          </div>
+          <div class="portfolio-card">
+            <h3>Product Launch Post</h3>
+            <p>Social media campaign for new product launch</p>
+            <div class="tech-tags">
+              <span>Photoshop</span>
+              <span>Social Media</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Brochure -->
+        <div
+          class="portfolio-item"
+          data-category="brochure"
+          data-aos="zoom-in"
+          data-gallery="brochure1.jpg"
+        >
+          <div class="image-container">
+            <img src="brochure1.jpg" alt="Product Brochure" />
+          </div>
+          <div class="portfolio-card">
+            <h3>Product Catalog Brochure</h3>
+            <p>Tri-fold brochure design for product line</p>
+            <div class="tech-tags">
+              <span>InDesign</span>
+              <span>Print Ready</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Business Cards -->
+        <div
+          class="portfolio-item"
+          data-category="business-cards"
+          data-aos="zoom-in"
+          data-gallery="business-card1.jpg,business-card2.jpg"
+        >
+          <div class="image-container">
+            <img src="business-card1.jpg" alt="Business Card Design" />
+            <img src="business-card2.jpg" alt="Business Card Design" />
+          </div>
+          <div class="portfolio-card">
+            <h3>Corporate Business Cards</h3>
+            <p>Modern business card design for tech company</p>
+            <div class="tech-tags">
+              <span>Photoshop</span>
+              <span>Spot UV</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional Business Card Image -->
+        <div
+          class="portfolio-item"
+          data-category="business-cards"
+          data-aos="zoom-in"
+        >
+          <div class="image-container">
+            <img
+              src="additional-business-card.jpg"
+              alt="Additional Business Card Design"
+            />
+          </div>
+          <div class="portfolio-card">
+            <h3>Additional Business Card Design</h3>
+            <p>Another modern business card design for tech company</p>
+            <div class="tech-tags">
+              <span>Photoshop</span>
+              <span>Spot UV</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CV Section -->
+    <section id="cv" class="cv-section">
+      <div class="timeline">
+        <div class="timeline-item" data-aos="fade-right">
+          <h3>🎓 Education</h3>
+          <div class="education-entry">
+            <h4>Master's in International Management</h4>
+            <p>Advanced School of Management Sciences, Annaba (2021-2024)</p>
+            <p>Specialization: Global Business Strategy</p>
+          </div>
+          <div class="education-entry">
+            <h4>Preparatory Program in Economics</h4>
+            <p>Advanced School of Management, Tlemcen (2019-2021)</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-aos="fade-left">
+          <h3>💼 Professional Experience</h3>
+          <div class="experience-entry">
+            <h4>Technical Support Specialist @ Teletic</h4>
+            <p>2024-Present | Algiers, Algeria</p>
+            <ul>
+              <li></li>
+              <li>Developed technical documentation system</li>
+            </ul>
+          </div>
+
+          <div class="experience-entry">
+            <h4>Graphic Designer @ Optimize Scientific Club</h4>
+            <p>2022-2024 | Annaba, Algeria</p>
+            <ul></ul>
+          </div>
+        </div>
+
+        <div class="skills-grid">
+          <div class="skill-item" data-aos="zoom-in">
+            <h3>🛠 Technical Skills</h3>
+            <p>
+              Adobe Creative Suite<br />
+              UI/UX Design<br />
+              Data Analysis<br />
+              Office 365
+            </p>
+          </div>
+
+          <div class="skill-item" data-aos="zoom-in" data-aos-delay="200">
+            <h3>🌍 Languages</h3>
+            <p>
+              Arabic (Native)<br />
+              English (Fluent)<br />
+              French (Proficient)
+            </p>
+          </div>
+
+          <div class="skill-item" data-aos="zoom-in" data-aos-delay="400">
+            <h3>💡 Soft Skills</h3>
+            <p>
+              Problem Solving<br />
+              Team Leadership<br />
+              Cross-cultural Communication
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+      <div class="contact-form">
+        <h2 data-aos="fade-up">Get In Touch</h2>
+        <div class="contact-info" data-aos="fade-up" data-aos-delay="100">
+          <p>📧 <a href="mailto:faroukmbr@gmail.com">faroukmbr@gmail.com</a></p>
+          <p>
+            🔗
+            <a
+              href="https://www.linkedin.com/in/meabrki-omar-elfarouk-3ba1251b6/"
+              target="_blank"
+              >LinkedIn Profile</a
+            >
+          </p>
+        </div>
+        <form
+          action="https://formspree.io/f/xanenyea"
+          method="POST"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
+          <div class="form-group">
+            <input type="text" name="name" placeholder="Your Name" required />
+          </div>
+          <div class="form-group">
+            <input
+              type="email"
+              name="email"
+              placeholder="Your Email"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <textarea
+              name="message"
+              placeholder="Your Message"
+              rows="5"
+              required
+            ></textarea>
+          </div>
+          <button type="submit">Send Message</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Click Me Button -->
+    <button
+      id="easter-egg"
+      style="
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        background: var(--secondary);
+        color: var(--light);
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      "
+    >
+      Click Me!
+    </button>
+
+    <!-- Duck Image -->
+    <img
+      id="duck"
+      src="https://media.tenor.com/images/1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c/tenor.gif"
+      alt="Walking Duck"
+      style="
+        display: none;
+        width: 100px;
+        position: fixed;
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+      "
+    />
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="social-links">
+          <a
+            href="https://www.linkedin.com/in/meabrki-omar-elfarouk-3ba1251b6/"
+            target="_blank"
+            >LinkedIn</a
+          >
+          <a href="mailto:faroukmbr@gmail.com">Email</a>
+          <a href="cv_elfarouk_mebarki.pdf" download class="download-cv"
+            >Download CV</a
+          >
+        </div>
+        <p>&copy; 2024 Omar Elfarouk Mebarki</p>
+      </div>
+    </footer>
+
+    <!-- Project Modal -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init({ duration: 1000, once: true });
+
+      // Portfolio Filtering
+      document.querySelectorAll(".filter-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document
+            .querySelectorAll(".filter-btn")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          const category = btn.dataset.category;
+          document.querySelectorAll(".portfolio-item").forEach((item) => {
+            item.style.display =
+              item.dataset.category === category ? "block" : "none";
+          });
+        });
+      });
+
+      // Initialize first category as active
+      document.querySelector(".filter-btn").click();
+
+      // Modal Functionality
+      const modal = document.getElementById("project-modal");
+      const closeBtn = document.querySelector(".close");
+
+      document.querySelectorAll(".portfolio-item").forEach((item) => {
+        item.addEventListener("click", () => {
+          const galleryImages = item.dataset.gallery?.split(",") || [];
+
+          const gallery = document.getElementById("modal-gallery");
+          gallery.innerHTML = "";
+          galleryImages.forEach((img) => {
+            const imgEl = document.createElement("img");
+            imgEl.src = img;
+            imgEl.className = "gallery-item";
+            gallery.appendChild(imgEl);
+          });
+
+          modal.style.display = "flex"; // Use flex to center modal content
+        });
+      });
+
+      closeBtn.addEventListener("click", () => (modal.style.display = "none"));
+      window.addEventListener("click", (e) => {
+        if (e.target === modal) modal.style.display = "none";
+      });
+
+      // Easter Egg Functionality
+      document
+        .getElementById("easter-egg")
+        .addEventListener("click", function () {
+          const duck = document.getElementById("duck");
+          duck.style.display = "block"; // Show the duck
+        });
+    </script>
+  </body>
+</html>
