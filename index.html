@@ -335,21 +335,45 @@
       }
 
       @media (max-width: 768px) {
-        .nav {
-          padding: 20px;
-          flex-direction: column;
-          gap: 15px;
-        }
-        .hero h1 {
-          font-size: 2.5rem;
-        }
-        .portfolio-grid {
-          padding: 2rem 20px;
-        }
-        .gallery-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
+  .hero {
+    height: 60vh; /* Adjusted height for mobile */
+  }
+  .hero h1 {
+    font-size: 2rem; /* Adjusted font size for mobile */
+  }
+  .portfolio-grid {
+    padding: 2rem 20px;
+  }
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .video-container {
+    padding-top: 75%; /* Adjusted for mobile aspect ratio */
+  }
+  .image-container img {
+    max-width: 100%; /* Ensure images are responsive */
+    height: auto; /* Maintain aspect ratio */
+  }
+}
+<!-- Duck Video -- >
+<-video> 
+  id="duck-video"
+  src="path_to_your_duck_video.mp4" 
+  style="
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: auto;
+    z-index: 999; /* Ensure it appears above other content */
+    object-fit: cover; /* Cover the entire area */
+  "
+  autoplay
+  loop
+  muted
+></video>
     </style>
   </head>
   <body>
