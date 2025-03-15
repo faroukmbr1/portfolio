@@ -334,7 +334,7 @@
         transition: 0.3s;
       }
 
-    @media (max-width: 768px) {
+@media (max-width: 768px) {
   .nav {
     padding: 10px; /* Reduced padding */
     flex-direction: column;
@@ -344,6 +344,7 @@
   .hero {
     height: 50vh; /* Adjusted height for mobile */
     padding: 0 10px; /* Reduced padding */
+    margin-top: 60px; /* Add margin to create space below the fixed header */
   }
 
   .hero h1 {
@@ -751,22 +752,18 @@
       Click Me!
     </button>
 
-    <!-- Duck Video Overlay -->
     <div class="video-overlay" id="video-overlay">
-      <video
-        id="duck-video"
-        src="duck.mp4"
-        style="
-          width: 80%; /* Adjust width as needed */
-          height: auto; /*
-        Maintain aspect ratio */
-        "
-        autoplay
-        loop
-        muted
-      ></video>
-    </div>
-
+  <video
+    id="duck-video"
+    src="duck.mp4"
+    style="
+      width: 80%; /* Adjust width as needed */
+      height: auto; /* Maintain aspect ratio */
+    "
+    loop
+    muted
+  ></video>
+</div>
     <!-- Footer -->
     <footer>
       <div class="footer-content">
@@ -808,32 +805,41 @@
       // Initialize first category as active
       document.querySelector(".filter-btn").click();
 
-      // Easter Egg Functionality
-      document
-        .getElementById("easter-egg")
-        .addEventListener("click", function () {
-          // Hide all other content
-          document.body.style.overflow = "hidden"; // Prevent scrolling
-          document.querySelector(".nav").style.display = "none"; // Hide navigation
-          document.querySelector(".hero").style.display = "none"; // Hide hero section
-          document.querySelector("#portfolio").style.display = "none"; // Hide portfolio section
-          document.querySelector("#cv").style.display = "none"; // Hide CV section
-          document.querySelector("#contact").style.display = "none"; // Hide contact section
-          document.getElementById("video-overlay").style.display = "flex"; // Show video overlay
-        });
+     // Easter Egg Functionality
+document
+  .getElementById("easter-egg")
+  .addEventListener("click", function () {
+    // Hide all other content
+    document.body.style.overflow = "hidden"; // Prevent scrolling
+    document.querySelector(".nav").style.display = "none"; // Hide navigation
+    document.querySelector(".hero").style.display = "none"; // Hide hero section
+    document.querySelector("#portfolio").style.display = "none"; // Hide portfolio section
+    document.querySelector("#cv").style.display = "none"; // Hide CV section
+    document.querySelector("#contact").style.display = "none"; // Hide contact section
+    document.getElementById("video-overlay").style.display = "flex"; // Show video overlay
 
-      // Close functionality (optional)
-      document
-        .getElementById("video-overlay")
-        .addEventListener("click", function () {
-          this.style.display = "none"; // Hide video overlay
-          document.body.style.overflow = "auto"; // Allow scrolling again
-          document.querySelector(".nav").style.display = "flex"; // Show navigation
-          document.querySelector(".hero").style.display = "flex"; // Show hero section
-          document.querySelector("#portfolio").style.display = "block"; // Show portfolio section
-          document.querySelector("#cv").style.display = "block"; // Show CV section
-          document.querySelector("#contact").style.display = "block"; // Show contact section
-        });
+    // Play the video
+    const duckVideo = document.getElementById("duck-video");
+    duckVideo.play(); // Start playing the video
+  });
+
+// Close functionality (optional)
+document
+  .getElementById("video-overlay")
+  .addEventListener("click", function () {
+    this.style.display = "none"; // Hide video overlay
+    document.body.style.overflow = "auto"; // Allow scrolling again
+    document.querySelector(".nav").style.display = "flex"; // Show navigation
+    document.querySelector(".hero").style.display = "flex"; // Show hero section
+    document.querySelector("#portfolio").style.display = "block"; // Show portfolio section
+    document.querySelector("#cv").style.display = "block"; // Show CV section
+    document.querySelector("#contact").style.display = "block"; // Show contact section
+
+    // Pause the video when closing the overlay
+    const duckVideo = document.getElementById("duck-video");
+    duckVideo.pause(); // Pause the video
+    duckVideo.currentTime = 0; // Reset video to the beginning
+  });
     </script>
   </body>
 </html>
